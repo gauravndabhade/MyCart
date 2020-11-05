@@ -20,17 +20,18 @@ class User(BaseModel):
 
 class Category(BaseModel):
     id = BigAutoField()
-    name = CharField()
-    price = FloatField()
+    name = CharField(unique=True)
     user = ForeignKeyField(User, backref='categories')
     created_date = DateTimeField(default=datetime.datetime.now)
 
 
 class Product(BaseModel):
     id = BigAutoField()
-    name = CharField()
+    name = CharField(unique=True)
+    price = FloatField()
     user = ForeignKeyField(User, backref='products')
-    category = ForeignKeyField(Category, backref='products')
+    category = ForeignKeyField(
+        Category, backref='products', null=True)
     created_date = DateTimeField(default=datetime.datetime.now)
 
 
