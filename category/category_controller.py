@@ -26,3 +26,11 @@ def get(name):
 
 def all():
     return [cat.name for cat in Category.select()]
+
+def get_all_categories():
+    try:
+        data = [[cat.name]
+                for cat in Category.select()]         
+        return data
+    except peewee.DoesNotExist:
+        return None

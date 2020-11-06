@@ -15,6 +15,8 @@ def create(username, password, is_admin):
         return f'User {username} created successful'
     except peewee.IntegrityError:
         return f'User {username} already exist!'
+    except peewee.OperationalError:
+        return f'Not database found. Initalize database with `mycart initdb` command'
 
 
 def login(username, password):
@@ -30,8 +32,10 @@ def login(username, password):
         else:
             return f'User not found for {username}'
 
-    except peewee.models.UserDoesNotExist:
+    except peewee.DoesNotExist:
         return f'{username} doesn\'t exists'
+    except peewee.OperationalError:
+        return f'Not database found. Initalize database with `mycart initdb` command'
 
 
 def logout():

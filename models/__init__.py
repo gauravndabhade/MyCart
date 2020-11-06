@@ -40,16 +40,3 @@ class Cart(BaseModel):
     user = ForeignKeyField(User, backref='carts')
     product = ForeignKeyField(Product, backref='carts')
     created_date = DateTimeField(default=datetime.datetime.now)
-
-
-class Bill(BaseModel):
-    id = BigAutoField()
-    user = ForeignKeyField(User, backref='bills')
-    product = ForeignKeyField(Product, backref='bills')
-    amount = FloatField()
-    is_discount = BooleanField()
-    created_date = DateTimeField(default=datetime.datetime.now)
-
-
-db.connect()
-db.create_tables([User, Category, Cart, Product, Bill])

@@ -10,22 +10,23 @@ def product():
 
 
 @ product.command()
-@ click.argument('q', required=False)
-def create(**kwargs):
+def create():
     """Create new product"""
-    click.echo("Creating new product")
-    name = click.prompt('Please enter product name')
-    price = click.prompt('Enter price')
-
     categories = category_controller.all()
-    category = click.prompt('Choose a category from list:',
-                            type=click.Choice(categories))
-    click.echo(product_controller.create(name, category, price))
-
+    if categories:
+        click.echo("Creating new product")
+        name = click.prompt('Enter product name')
+        price = click.prompt('Enter price')
+        category = click.prompt('Choose a category from list:',
+                                type=click.Choice(categories))
+        click.echo(product_controller.create(name, category, price))
+    else:
+        click.echo('Category list is empty. Add new categories...')
 
 @ product.command()
-@ click.argument('q', required=False)
-def remove(**kwargs):
+def remove():
     """Remove product"""
-    click.echo(kwargs)
-    pass
+    name = click.prompt('Enter product name')
+    click.echo(product_controller.remove(name))
+
+    

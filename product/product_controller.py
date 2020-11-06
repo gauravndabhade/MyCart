@@ -6,12 +6,14 @@ from user import user_session
 from category import category_controller
 
 
-# def display(product):
-#     click.echo(click.style(product.name, fg='cyan'))
-
-
-def all_products():
-    return Product.select()
+def get_all_product():
+    try:
+        data = [[p.name, p.category.name, p.price]
+                for p in Product.select()]
+            
+        return data
+    except peewee.DoesNotExist:
+        return None
 
 
 def create(name, category, price):
@@ -22,4 +24,9 @@ def create(name, category, price):
                              price=price, category=category)
     product.save()
 
-    return f'Product {product.name} created successfully!'
+    return f'Product {product.name} created!'
+
+def remove(name):
+    product = Product.get(Product.name == name)
+    product.delete_instance()
+    return f'Product {product.name} removed!'
