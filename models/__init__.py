@@ -1,10 +1,9 @@
 from peewee import SqliteDatabase, Model
 from peewee import CharField, ForeignKeyField, TextField, DateTimeField, BooleanField, BigAutoField, FloatField
 import datetime
+import config
 
-
-db = SqliteDatabase('sqlite3.db')
-
+db = SqliteDatabase(config.DATABASE)
 
 class BaseModel(Model):
     class Meta:

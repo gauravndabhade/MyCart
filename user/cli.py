@@ -1,6 +1,7 @@
 import click
+from user.controller import UserController
 
-from user import user_controller
+user_controller = UserController()
 
 
 @click.group()

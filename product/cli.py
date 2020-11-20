@@ -1,8 +1,9 @@
 import click
-from product import product_controller
-from category import category_controller
+from product.controller import ProductController 
+from category.controller import CategoryController
 
-
+product_controller = ProductController()
+category_controller = CategoryController()
 @click.group()
 def product():
     """Get all products from your cart"""
@@ -13,6 +14,7 @@ def product():
 def create():
     """Create new product"""
     categories = category_controller.all()
+
     if categories:
         click.echo("Creating new product")
         name = click.prompt('Enter product name')
