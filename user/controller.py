@@ -2,6 +2,7 @@ import peewee
 from models import User
 from user.session import UserSession 
 from base.controller import BaseController
+from MyCart.utils import show_init_database
 user_session = UserSession()
 
 class UserController(BaseController):
@@ -18,8 +19,7 @@ class UserController(BaseController):
         except peewee.IntegrityError:
             return f'User {username} already exist!'
         except peewee.OperationalError:
-            return f'Not database found. Initalize database with `mycart initdb` command'
-
+            show_init_database()
 
     def login(self, username, password):
         try:
@@ -37,8 +37,7 @@ class UserController(BaseController):
         except peewee.DoesNotExist:
             return f'{username} doesn\'t exists'
         except peewee.OperationalError:
-            return f'Not database found. Initalize database with `mycart initdb` command'
-
+            show_init_database()
 
     def logout(self):
         user_session.write_current_user(username=None, is_admin=None)

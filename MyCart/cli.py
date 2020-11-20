@@ -18,7 +18,7 @@ product_controller = ProductController()
 @click.group()
 @click.version_option("1.0.0")
 def main():
-    """MyCart an E-commerce cli application"""
+    """MyCart, An E-commerce cli application"""
     show_welcome()
 
     
@@ -52,7 +52,7 @@ def initdb():
 
 @main.command()
 def dropdb():
-    """Clear database"""
+    """Clear/Delete database"""
     db.drop_tables(MODELS)
     db.close()
     click.echo('Dropped the database')

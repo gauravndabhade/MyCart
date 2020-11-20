@@ -6,7 +6,7 @@ product_controller = ProductController()
 category_controller = CategoryController()
 @click.group()
 def product():
-    """Get all products from your cart"""
+    """Manage products"""
     pass
 
 

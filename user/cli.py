@@ -6,11 +6,12 @@ user_controller = UserController()
 
 @click.group()
 def user():
+    """Manage user"""
     pass
 
 
 @user.command()
-def create(**kwargs):
+def create():
     """Creating new user"""
 
     click.echo("Creating new user!")
@@ -27,7 +28,7 @@ def create(**kwargs):
 
 
 @user.command()
-def login(**kwargs):
+def login():
     """User login"""
     click.echo("User login!")
     username = click.prompt('Please enter a username')

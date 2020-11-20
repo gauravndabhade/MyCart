@@ -32,6 +32,7 @@ def add_admin(is_admin):
 def show_bills():
     username, _ = user_session.read_current_user()
     if username:
+        click.echo(click.style('Bill : ', fg='cyan') + click.style('\t\t\tPURCHASE ORDER OF MINIMUM 10000/-, AND GET DISCOUNT!!!', fg='green'))
         cart_data = cart.get_cart_products(username)
         if cart_data:
             total_amount = sum_price(cart_data, 1) # 1 -> price coloumn index
@@ -45,41 +46,44 @@ def show_bills():
                 "\t\t\t--------")
             click.echo('\t\t\t' + str(total_amount - discount_amount))
     else:
-        click.echo(click.style(
-            'User login or Create new account to MyCart', fg='yellow'))
+        show_login_require()
 
 def show_welcome():
     try:
-        user = user_session.current_user()
-        if user:
-            show_nav()
+        username, is_admin = user_session.read_current_user()
+        if username:
+            show_nav(username, is_admin)
             show_categories()
             show_products()
-            show_cart_status()        
+            show_cart_status(username)        
             click.echo(
-                    "----------------------------------------------------------------------------------------------------------------")
+                    "--------------------------------------------------------------------------------")
         else:
             click.echo('MyCart')
             click.echo(
                 "--------------------------------------------------------------------------------")
-                    
-            click.echo(click.style(
-                'User login or Create new account to MyCart', fg='yellow'))
-
+            show_login_require()
+    
     except peewee.OperationalError:
         click.echo('MyCart')
         click.echo(
                 "--------------------------------------------------------------------------------")
-        click.echo(click.style(
-            'Not database found. Initalize database with command :  ', fg='red')
-            +click.style('$ mycart initdb', fg='green'))
+        show_init_database()
 
 
-def show_nav():
+def show_login_require():
+    click.echo(click.style(
+            'User login or Create new account to MyCart', fg='yellow'))
+
+def show_init_database():
+    click.echo(click.style(
+        'Not database found. Initalize database with command :  ', fg='yellow')
+        +click.style('$ mycart initdb', fg='red'))
+
+def show_nav(username, is_admin):
     click.echo()
     click.echo()
-    username, is_admin = user_session.read_current_user()
-    click.echo('MyCart \t\t\t\t\t\t\t\t\t\t Login as: ' + click.style(username,
+    click.echo('MyCart \t\t\t\t\t\t\t Login as: ' + click.style(username,
                                                                         fg='cyan') + add_admin(is_admin))
     click.echo(
             "--------------------------------------------------------------------------------")
@@ -102,8 +106,7 @@ def show_products():
     else:
         click.echo('Products not found')
 
-def show_cart_status():
-    username, _ = user_session.read_current_user()
+def show_cart_status(username):
     click.echo(click.style('Cart', fg='cyan'))
     cart_products = cart.get_cart_products(username)
     if cart_products:

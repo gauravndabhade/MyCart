@@ -4,7 +4,7 @@ from category.controller import CategoryController
 
 @click.group()
 def category():
-    """Get all category from your cart"""
+    """Manage category"""
     pass
 
 
